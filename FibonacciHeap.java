@@ -1,5 +1,4 @@
 
-
 import java.util.*;
 
 
@@ -94,30 +93,62 @@ public class FibonacciHeap {
     }
 
     // melding the heaps according to the degree
-    public void meld(Node temp, HashMap<Integer, Node> map) {
-        // check the degree of the entire top level list
-        if (!map.containsKey(temp.degree))
-            map.put(temp.degree, temp);
+    // public void meld(Node temp, HashMap<Integer, Node> map) {
+    //   // System.out.println(temp.keyword);
+    //     // check the degree of the entire top level list
+    //     if (!map.containsKey(temp.degree))
+    //         map.put(temp.degree, temp);
+    //     Node currRight = root.right;
+    //     //populate the hashmap
+    //     //traverse for everynode
+    //     while (currRight.right != root) {
+    //         // Checking whether the given element exists in the hashtable and whether the degree of the current element is present in the hashtable
+    //         // If there is an another element with same degree then combine the elements
+    //         if (map.containsKey(currRight.degree) && !map.containsValue(currRight)) {
+    //             // Extract the element from the hashtable/map that has the same degree as the current element of the circular list
+    //             Node tempNode = map.remove(currRight.degree);
+    //
+    //             // Check which element is bigger
+    //             if (tempNode.count < currRight.count) {
+    //                 addChild(currRight, tempNode);
+    //                 meld(currRight, map);
+    //             } else {
+    //                 addChild(tempNode, currRight);
+    //                 meld(tempNode, map);
+    //             }
+    //             // Invoke pairwise combine with the new combined element
+    //             // meld(tempNode, map);
+    //             break;
+    //         } else {
+    //             // Check whether the element is present in the hashtable
+    //             if (!map.containsValue(currRight))
+    //                 map.put(currRight.degree, currRight);
+    //             currRight = currRight.right;
+    //         }
+    //     }
+    // }
+
+
+    public void meld(Node temp, Map<Integer, Node> map) {
         Node currRight = root.right;
-        //populate the hashmap
-        //traverse for everynode
-        while (currRight.right != root) {
-            // Checking whether the given element exists in the hashtable and whether the degree of the current element is present in the hashtable
+        while (currRight != root) {
+            // Checking whether the given element exists in the hashtable and whether the degree of the current
+            // element is present in the hashtable
             // If there is an another element with same degree then combine the elements
             if (map.containsKey(currRight.degree) && !map.containsValue(currRight)) {
-                // Extract the element from the hashtable/map that has the same degree as the current element of the circular list
+                // Extract the element from the hashtable/map that has the same degree
+                // as the current element of the circular list
+                // System.out.println("Map has " + map.size() + " elements");
                 Node tempNode = map.remove(currRight.degree);
 
                 // Check which element is bigger
                 if (tempNode.count < currRight.count) {
                     addChild(currRight, tempNode);
-                    meld(currRight, map);
+                    currRight = root.right; // restart process
                 } else {
                     addChild(tempNode, currRight);
-                    meld(tempNode, map);
+                    currRight = root.right; // restart process
                 }
-                // Invoke pairwise combine with the new combined element
-                break;
             } else {
                 // Check whether the element is present in the hashtable
                 if (!map.containsValue(currRight))
@@ -133,6 +164,11 @@ public class FibonacciHeap {
         Node pointer = root;
         Node tempmax = root;
         boolean flag = true;
+
+        if (root == null) {
+            return;
+        }
+
         while (pointer.right != firstnode) {
             if (pointer.count > tempmax.count)
                 tempmax = pointer;
