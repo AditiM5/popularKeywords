@@ -93,8 +93,8 @@ public class FibonacciHeap {
         x.degree += 1;
     }
 
+    // melding the heaps according to the degree
     public void meld(Node temp, HashMap<Integer, Node> map) {
-//        System.out.println("meld");
         // check the degree of the entire top level list
         if (!map.containsKey(temp.degree))
             map.put(temp.degree, temp);
@@ -127,7 +127,7 @@ public class FibonacciHeap {
         }
     }
 
-
+    // function to reset the root pointer - to ensure it points to the max value
     public void resetRootPointer() {
         Node firstnode = root;
         Node pointer = root;
@@ -199,7 +199,8 @@ public class FibonacciHeap {
             root.parent = null;
             Node maxSoFar = root;
 
-            // Iterate across all the elements of the root circular list and resetting the parent to itself and childcut to false
+            // resetting parent values of the root level circular linked list (as new nodes have been added to it)
+            // also making sure all their childCut values are set to false
             while (maxSoFar.right != root) {
                 maxSoFar.parent = null;
                 maxSoFar.childCut = false;
@@ -213,7 +214,7 @@ public class FibonacciHeap {
     }
 
 
-    // detech an element from it's parent node
+    // detech an element node from it's parent node
     Node remove(Node node) {
         Node parent = node.parent;
 
@@ -244,12 +245,11 @@ public class FibonacciHeap {
 
         // reset root pointer
         resetRootPointer();
-
         return node;
     }
 
 
-    // increase the value of the key by some value
+    // increase the value of the count by some value
     public void increaseKey(Node node, int incr) {
         // calculating what the new count for the node should be
         int new_value = node.count + incr;
