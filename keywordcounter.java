@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.util.*;
 
 public class keywordcounter {
+
     public static void main(String args[]) throws IOException {
         FibonacciHeap fb = new FibonacciHeap();
         // HashMap to store the String - Node pairs
@@ -44,11 +45,21 @@ public class keywordcounter {
                         // call removeMax n number of times and save in a ArrayList called removedNodes
                         int top = Integer.parseInt(str);
                         ArrayList<Node> removedNodes = new ArrayList<>();
+                        int numNodes = nodeAll.size();
+                        boolean flag = false;
+                        if(top > numNodes){
+                            top = numNodes - 1;
+                            flag = true;
+                        }
                         while (top > 0) {
                             Node max = fb.removeMax();
                             removedNodes.add(max);
                             writeToFile.append((max.keyword + ","));
                             top--;
+                        }
+                        if(flag){
+                            writeToFile.append(fb.root.keyword + ",");
+                            fb.root = null;
                         }
                         writeToFile.deleteCharAt(writeToFile.length() - 1);
                         writeToFile.append("\n");
@@ -66,12 +77,14 @@ public class keywordcounter {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(e);
         } finally {
             if (writer != null) {
                 try {
                     writer.close();
                 } catch (IOException e) {
+                    e.printStackTrace();
                     System.out.println(e);
 
                 }
