@@ -4,6 +4,7 @@ Max-Fibonacci Heap is a data-structure consisting of heap-ordered trees that has
 
 ## Running the code 
 ```
+$cd popularKeywords
 $make
 $java keywordcounter <inputFile>
 
